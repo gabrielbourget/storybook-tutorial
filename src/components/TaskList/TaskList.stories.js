@@ -1,16 +1,16 @@
 import React from "react";
-import TaskList from "./TaskLisk";
+import { PureTaskList } from "./TaskLisk";
 import * as TaskStories from "../Task/Task.stories";
 
 const storyConfig = {
-  component: TaskList,
+  component: PureTaskList,
   title: "TaskList",
   decorators: [(story) => <div style={{ padding: "3rem" }}>{story()}</div>]
 }
 
 export default storyConfig;
 
-const Template = (args) => <TaskList {...args} />;
+const Template = (args) => <PureTaskList {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
@@ -41,5 +41,5 @@ Loading.args = {
 export const Empty = Template.bind({});
 Empty.args = {
   tasks: [],
-  // loading: false,
+  loading: false,
 };

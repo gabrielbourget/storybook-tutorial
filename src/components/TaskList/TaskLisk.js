@@ -1,8 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import Task from "../Task/Task";
+import { archiveTask, pinTask } from "../../lib/redux";
 
-const TaskList = (props) => {
+export const PureTaskList = (props) => {
   const { loading, tasks, onPinTask, onArchiveTask } = props;
   const events = { onPinTask, onArchiveTask };
 
@@ -52,15 +54,23 @@ const TaskList = (props) => {
   );
 }
 
-export default TaskList;
-
-TaskList.propTypes = {
+PureTaskList.propTypes = {
   loading: PropTypes.bool,
   tasks: PropTypes.arrayOf(Task.propTypes.task).isRequired,
   onPinTask: PropTypes.func,
   onArchiveTask: PropTypes.func,
 };
 
-TaskList.defaultProps = {
+PureTaskList.defaultProps = {
   loading: false
 }
+
+export default connect(
+  ({ tasks }) => ({
+    tasks: tasks.filter(t => t.state === ("TASK_INBOX" || t.state === "TASK_PINNED")),
+  }),
+  dispatch => ({
+    onArchiveTask: (id) => dispatch(archiveTask(id)),
+    pinTask: (id) => dispatch(pinTask(id)),
+  })
+)(PureTaskList);
