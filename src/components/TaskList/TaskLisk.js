@@ -46,7 +46,7 @@ const TaskList = (props) => {
       {
         tasksInOrder.map((task) => (
           <Task key={task.id} task={task} {...events} />
-        )) 
+        ))
       }
     </div>
   );
